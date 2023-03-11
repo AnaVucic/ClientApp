@@ -28,13 +28,13 @@ public class MainController {
     }
     
     private void addActionListeners() {
-        mainForm.mniAppointmentsActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                MainCoordinator.getInstance().openAppointmentsForm();
-            }
+        mainForm.mniAppointmentsActionListener((ActionEvent e) -> {
+            MainCoordinator.getInstance().openAppointmentsForm();
         });
         
+        mainForm.mniDogsActionListener((ActionEvent e) -> {
+        MainCoordinator.getInstance().openDogsForm();
+        });
         
         
     }

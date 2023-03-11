@@ -1,12 +1,16 @@
 package clientapp.view.coordinator;
 
 import clientapp.view.controller.AddAppointmentController;
+import clientapp.view.controller.AddDogController;
 import clientapp.view.controller.AppointmentsController;
+import clientapp.view.controller.DogsController;
 import clientapp.view.controller.EditAppointmentController;
 import clientapp.view.controller.LoginController;
 import clientapp.view.controller.MainController;
 import clientapp.view.form.AddAppointmentForm;
+import clientapp.view.form.AddDogForm;
 import clientapp.view.form.AppointmentsForm;
+import clientapp.view.form.DogsForm;
 import clientapp.view.form.EditAppointmentForm;
 import clientapp.view.form.LoginForm;
 import clientapp.view.form.MainForm;
@@ -79,6 +83,18 @@ public class MainCoordinator {
     // ADD APPOINTMENT FORM
     public void openAddAppointmentForm(AppointmentsController parentController) {
         AddAppointmentController addController = new AddAppointmentController(new AddAppointmentForm(), parentController);
+        addController.openForm();
+    }
+    
+    // DOGS FORM
+    public void openDogsForm(){
+        DogsController dogsController = new DogsController(new DogsForm());
+        dogsController.openForm();
+    }
+
+    // ADD DOG FORM
+    public void openAddDogForm(DogsController parentController) {
+        AddDogController addController = new AddDogController(new AddDogForm(), parentController);
         addController.openForm();
     }
 }

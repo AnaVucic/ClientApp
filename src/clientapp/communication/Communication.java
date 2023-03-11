@@ -2,6 +2,7 @@ package clientapp.communication;
 
 import commonlib.domain.Appointment;
 import commonlib.domain.AppointmentService;
+import commonlib.domain.Breed;
 import commonlib.domain.Dog;
 import commonlib.domain.Person;
 import commonlib.domain.Salon;
@@ -215,6 +216,58 @@ public class Communication {
         Response response = (Response) receiver.receive();
 
         if (response.getException() == null) {
+        } else {
+            throw response.getException();
+        }
+    }
+    
+    // FIND DOGS
+    public List<Dog> findDogs(Dog dog) throws Exception {
+        Request request = new Request(Operation.FIND_DOGS, dog);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if (response.getException() == null) {
+            return (List<Dog>) response.getResult();
+        } else {
+            throw response.getException();
+        }
+    }
+
+    // REMOVE DOG
+    public void removeDog(Dog d) throws Exception {
+        Request request = new Request(Operation.DELETE_DOG, d);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+        } else {
+            throw response.getException();
+        }
+    }
+
+    // GET ALL BREEDS
+    public List<Breed> getAllBreeds() throws Exception {
+        Request request = new Request(Operation.GET_ALL_BREEDS, null);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+            List<Breed> b = (List<Breed>) response.getResult();
+            return b;
+        } else {
+            throw response.getException();
+        }
+    }
+
+    // SAVE DOG
+    public Long saveDog(Dog d) throws Exception {
+        Request request = new Request(Operation.SAVE_DOG, d);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+            Long index = (Long) response.getResult();
+            return index;
         } else {
             throw response.getException();
         }
