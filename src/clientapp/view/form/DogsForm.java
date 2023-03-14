@@ -5,12 +5,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 public class DogsForm extends javax.swing.JFrame {
 
     public DogsForm() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        tblDogs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         
     }
 

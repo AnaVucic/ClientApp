@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package clientapp.view.controller;
 
 import clientapp.communication.Communication;
@@ -15,16 +11,11 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author ANA
- */
 public class DogsController {
 
     private final DogsForm form;
     private List<Dog> dogs;
     private List<Person> persons;
-    private Long generatedID;
 
     public DogsController(DogsForm form) {
         this.form = form;
@@ -119,6 +110,8 @@ public class DogsController {
                     Communication.getInstance().removeDog(d);
                 } catch (Exception ex) {
                     System.out.println("Exception occured while removing dog:\n" + ex.getMessage());
+                    JOptionPane.showMessageDialog(form, "System was unable to remove dog with id " + d.getDogID());
+                    return;
                 }
                 JOptionPane.showMessageDialog(form, "System has successfully removed dog with id " + d.getDogID());
                 populateTableDogs();

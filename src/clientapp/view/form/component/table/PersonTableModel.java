@@ -1,35 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package clientapp.view.form.component.table;
 
-import commonlib.domain.Dog;
+import commonlib.domain.Person;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-/**
- *
- * @author ANA
- */
-public class DogTableModel extends AbstractTableModel {
-    
-    private final String[] columnNames = {"ID", "Owner","Breed", "Name"};
-    
-    private final List<Dog> dogs;
+public class PersonTableModel extends AbstractTableModel {
 
-    public DogTableModel(List<Dog> dogs) {
-        this.dogs = dogs;
+    private final String[] columnNames = {"ID", "Firstname", "Lastname", "Contact number", "Number of appointments"};
+
+    private final List<Person> persons;
+
+    public PersonTableModel(List<Person> persons) {
+        this.persons = persons;
     }
-    
-    
 
     @Override
     public int getRowCount() {
-        if (dogs == null) {
+        if (persons == null) {
             return 0;
         }
-        return dogs.size();
+        return persons.size();
     }
 
     @Override
@@ -39,16 +29,17 @@ public class DogTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Dog d = dogs.get(rowIndex);
+        Person p = persons.get(rowIndex);
         return switch (columnIndex) {
-            case 0 -> d.getDogID();
-            case 1 -> d.getPerson().getFirstname() + " " + d.getPerson().getLastname();
-            case 2 -> d.getBreed().getName();
-            case 3 -> d.getName();
+            case 0 -> p.getPersonID();
+            case 1 -> p.getFirstname();
+            case 2 -> p.getLastname();
+            case 3 -> p.getContactNumber();
+            case 4 -> p.getAppointment_number();
             default -> "n/a";
         };
     }
-    
+
     @Override
     public String getColumnName(int column) {
         if (column > columnNames.length) {
@@ -64,12 +55,13 @@ public class DogTableModel extends AbstractTableModel {
             case 1 -> String.class;
             case 2 -> String.class;
             case 3 -> String.class;
+            case 4 -> int.class;
             default -> String.class;
         };
     }
     
-    public Dog getDog (int rowIndex){
-        return dogs.get(rowIndex);
+    public Person getPerson (int rowIndex){
+        return persons.get(rowIndex);
     }
     
 }

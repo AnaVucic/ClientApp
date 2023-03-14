@@ -1,5 +1,6 @@
 package clientapp.view.coordinator;
 
+import clientapp.view.controller.PersonsController;
 import clientapp.view.controller.AddAppointmentController;
 import clientapp.view.controller.AddDogController;
 import clientapp.view.controller.AppointmentsController;
@@ -14,6 +15,7 @@ import clientapp.view.form.DogsForm;
 import clientapp.view.form.EditAppointmentForm;
 import clientapp.view.form.LoginForm;
 import clientapp.view.form.MainForm;
+import clientapp.view.form.PersonsForm;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -96,5 +98,11 @@ public class MainCoordinator {
     public void openAddDogForm(DogsController parentController) {
         AddDogController addController = new AddDogController(new AddDogForm(), parentController);
         addController.openForm();
+    }
+
+    // PERSON FORM
+    public void openPersonsForm() {
+        PersonsController personController = new PersonsController(new PersonsForm());
+        personController.openForm();
     }
 }

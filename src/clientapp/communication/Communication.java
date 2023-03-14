@@ -272,4 +272,16 @@ public class Communication {
             throw response.getException();
         }
     }
+
+    // REMOVE PERSON
+    public void removePerson(Person p) throws Exception {
+        Request request = new Request(Operation.DELETE_PERSON, p);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+        } else {
+            throw response.getException();
+        }
+    }
 }
