@@ -24,18 +24,21 @@ public class DogsController {
 
     public void openForm() {
         form.setVisible(true);
-        prepareView();
+        populateTableDogs(null);
+        populateListPersons();
     }
 
-    private void prepareView() {
-        populateTableDogs();
-        fillComboPerson();
-    }
+   
 
-    public void populateTableDogs() {
+    public void populateTableDogs(List<Dog> dogs) {
+        DogTableModel model;
         try {
-            dogs = Communication.getInstance().getAllDogs();
-            DogTableModel model = new DogTableModel(dogs);
+            if (dogs == null) {
+                this.dogs = Communication.getInstance().getAllDogs();
+                model = new DogTableModel(this.dogs);
+            }  else {
+                model = new DogTableModel(dogs);
+            }
             form.getTblDogs().setModel(model);
             TableRowSorter sorter = new TableRowSorter(model);
             form.getTblDogs().setRowSorter(sorter);
@@ -44,18 +47,10 @@ public class DogsController {
         }
     }
 
-    private void fillComboPerson() {
+    private void populateListPersons() {
         try {
-            form.getCmbPerson().removeAllItems();
-            form.getCmbPerson().setEnabled(false);
-            form.getCmbPerson().addItem(null);
             persons = Communication.getInstance().getAllPersons();
-            for (Person p : persons) {
-                form.getCmbPerson().addItem(p);
-            }
-            form.getCmbPerson().setSelectedItem(null);
-            form.getCmbPerson().setEnabled(true);
-
+            System.out.println(persons);
         } catch (Exception ex) {
             System.out.println("Exception while getting persons from database:\n" + ex.getMessage());
         }
@@ -63,58 +58,47 @@ public class DogsController {
 
     private void addActionListeners() {
         form.btnSearchActionListener((ActionEvent e) -> {
-            Person selectedPerson = (Person) form.getCmbPerson().getSelectedItem();
-            if (selectedPerson != null) {
-                try {
-                    Dog dog = new Dog();
-                    dog.setPerson(selectedPerson);
-                    dogs = Communication.getInstance().findDogs(dog);
-                    if (dogs.isEmpty()) {
-                        JOptionPane.showMessageDialog(form,
-                                "This owner doesn't currently have any dogs.",
-                                "Owner has got no dogs currently",
-                                JOptionPane.WARNING_MESSAGE);
-                        return;
-                    }
-                    DogTableModel model = new DogTableModel(dogs);
-                    form.getTblDogs().setModel(model);
-                    TableRowSorter sorter = new TableRowSorter(model);
-                    form.getTblDogs().setRowSorter(sorter);
-                } catch (Exception ex) {
-                    System.out.println("Exception occured while finding dogs in database:\n" + ex.getMessage());
-                }
+            String filter = form.getTxtSearch().getText().trim().toLowerCase();
+            Dog d = new Dog();
+            d.setName(filter);
+            try{
+                dogs = Communication.getInstance().findDogs(d);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(form, "Error while getting dogs from database.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+            if(dogs.isEmpty()){
+                populateTableDogs(null);
+                JOptionPane.showMessageDialog(form, "No dogs found with that name.", "No dogs found!", JOptionPane.INFORMATION_MESSAGE);
+                form.getTxtSearch().setText("");
             } else {
-                JOptionPane.showMessageDialog(form, "Select an owner to search by!", "Owner Not Selected", JOptionPane.WARNING_MESSAGE);
+                populateTableDogs(dogs);
+                JOptionPane.showMessageDialog(form, "System has found dogs with given parameters.", "Dogs found!", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
         form.btnResetActionListener((ActionEvent e) -> {
-            try {
-                dogs = Communication.getInstance().getAllDogs();
-                DogTableModel model = new DogTableModel(dogs);
-                form.getTblDogs().setModel(model);
-                TableRowSorter sorter = new TableRowSorter(model);
-                form.getTblDogs().setRowSorter(sorter);
-            } catch (Exception ex) {
-                System.out.println("Exception occured while finding dogs in database:\n" + ex.getMessage());
-            }
+            populateTableDogs(null);
+            form.getTxtSearch().setText("");
         });
 
         form.btnRemoveDogActionListener((ActionEvent e) -> {
             int row = form.getTblDogs().getSelectedRow();
-            if (row != -1) {
+            if (row != -1) {  
                 Long id = (Long) form.getTblDogs().getValueAt(row, 0);
                 Dog d = new Dog();
                 d.setDogID(id);
-                try {
-                    Communication.getInstance().removeDog(d);
-                } catch (Exception ex) {
-                    System.out.println("Exception occured while removing dog:\n" + ex.getMessage());
-                    JOptionPane.showMessageDialog(form, "System was unable to remove dog with id " + d.getDogID());
-                    return;
-                }
-                JOptionPane.showMessageDialog(form, "System has successfully removed dog with id " + d.getDogID());
-                populateTableDogs();
+                int response = JOptionPane.showConfirmDialog(form, "Are you sure you want to remove dog with id " +  id +"?");
+                    if (response == JOptionPane.YES_OPTION) {
+                        try {
+                            Communication.getInstance().removeDog(d);
+                            JOptionPane.showMessageDialog(form, "System has successfully removed dog with id " + d.getDogID());
+                            populateTableDogs(null);
+                        } catch (Exception ex) {
+                            System.out.println("Exception occured while removing dog:\n" + ex.getMessage());
+                            JOptionPane.showMessageDialog(form, "System was unable to remove dog with id " + d.getDogID());
+                        }
+                        
+                    }
             } else {
                 JOptionPane.showMessageDialog(form, "You must select a dog to be removed.", "Select a dog", JOptionPane.WARNING_MESSAGE);
             }
@@ -125,7 +109,14 @@ public class DogsController {
         });
 
         form.btnEditDogActionListener((ActionEvent e) -> {
-            // TO BE IMPL..
+            int row = form.getTblDogs().getSelectedRow();
+            if (row != -1) {
+                Long id = (Long) form.getTblDogs().getValueAt(row, 0);
+                MainCoordinator.getInstance().openEditDogForm(id, this);
+            } else {
+                JOptionPane.showMessageDialog(form, "You must select a dog to edit.", "Select an appointment", JOptionPane.INFORMATION_MESSAGE);
+
+            }
         });
     }
 }

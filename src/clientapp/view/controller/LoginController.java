@@ -44,6 +44,7 @@ public class LoginController {
                     MainCoordinator.getInstance().addParam(Constant.LOGGED_IN_USER, user);
                     MainCoordinator.getInstance().openMainForm();
                 } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(loginForm, "Unable to login\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

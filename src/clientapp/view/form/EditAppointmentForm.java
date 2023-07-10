@@ -5,9 +5,7 @@ import commonlib.domain.Dog;
 import commonlib.domain.Person;
 import commonlib.domain.Salon;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -15,19 +13,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
-/**
- *
- * @author Lenovo
- */
+
 public class EditAppointmentForm extends javax.swing.JFrame {
 
     private final Long id;
     private final AppointmentsController parentController;
 
-    /**
-     * Creates new form EditAppointmentForm
-     * @param id
-     */
+    
     public EditAppointmentForm(Long id, AppointmentsController parentController) {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -72,6 +64,7 @@ public class EditAppointmentForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("(Edit Appointment) Dog Grooming Salon Management App");
 
         jPanel1.setBackground(new java.awt.Color(234, 234, 234));
         jPanel1.setPreferredSize(new java.awt.Dimension(275, 359));

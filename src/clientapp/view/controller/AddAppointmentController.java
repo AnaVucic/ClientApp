@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package clientapp.view.controller;
 
 import clientapp.communication.Communication;
@@ -20,10 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Lenovo
- */
 public class AddAppointmentController {
 
     private final AddAppointmentForm form;
@@ -49,7 +41,7 @@ public class AddAppointmentController {
                     addAppointment(appointment);
                     appointment.setAppointmentID(id);
                     JOptionPane.showMessageDialog(form, "Saved appointment with ID: " + appointment.getAppointmentID(), "Success", JOptionPane.INFORMATION_MESSAGE);
-                    parentController.fillTableAppointments(null, null, null);
+                    parentController.populateTableAppointments(null);
                     form.dispose();
                 } else {
                     JOptionPane.showMessageDialog(form, "System was unable to save appointment with given parameters", "Failure", JOptionPane.WARNING_MESSAGE);
@@ -149,13 +141,16 @@ public class AddAppointmentController {
 
     public void openForm() {
         form.setVisible(true);
-        prepareView();
-    }
-
-    private void prepareView() {
-        fillComboDogs();
-        fillComboSalons();
-        getServices();
+        try {
+            fillComboDogs();
+            fillComboSalons();
+            getServices();
+            JOptionPane.showMessageDialog(form, "System has created an appointment!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(form, "System was unable to create an appointment!", "Failure", JOptionPane.ERROR_MESSAGE);
+            form.dispose();
+        }
+        
     }
 
     private void fillComboDogs() {

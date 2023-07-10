@@ -40,11 +40,11 @@ public class AddDogController {
                 }
                 dog.setDogID(generatedID);
                 JOptionPane.showMessageDialog(form, "Saved dog with ID: " + dog.getDogID(), "Success", JOptionPane.INFORMATION_MESSAGE);
-                parentController.populateTableDogs();
+                parentController.populateTableDogs(null);
                 form.dispose();
             } else {
                 dog = null;
-                JOptionPane.showMessageDialog(form, "System was unable to save appointment with given parameters", "Failure", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(form, "System was unable to save dog with given parameters", "Failure", JOptionPane.WARNING_MESSAGE);
             }
             System.out.println(dog);
         });

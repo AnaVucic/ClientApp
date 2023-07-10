@@ -3,6 +3,7 @@ package clientapp.communication;
 import commonlib.domain.Appointment;
 import commonlib.domain.AppointmentService;
 import commonlib.domain.Breed;
+import commonlib.domain.City;
 import commonlib.domain.Dog;
 import commonlib.domain.Person;
 import commonlib.domain.Salon;
@@ -284,4 +285,125 @@ public class Communication {
             throw response.getException();
         }
     }
+
+    // UPDATE DOG
+    public void editDog(Dog dog) throws Exception {
+        Request request = new Request(Operation.EDIT_DOG, dog);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        
+        if(response.getException() == null){
+            
+        } else {
+            throw response.getException();
+        }
+    }
+    
+    // FIND PERSONS
+    public List<Person> findPersons(Person person) throws Exception {
+        Request request = new Request(Operation.FIND_PERSONS, person);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if (response.getException() == null) {
+            return (List<Person>) response.getResult();
+        } else {
+            throw response.getException();
+        }
+    }
+
+    // UPDATE PERSON
+    public void editPerson(Person person) throws Exception {
+        Request request = new Request(Operation.EDIT_PERSON, person);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        
+        if(response.getException() == null){
+            
+        } else {
+            throw response.getException();
+        }
+    }
+
+    // SAVE PERSON
+    public Long savePerson(Person person) throws Exception {
+        Request request = new Request(Operation.SAVE_PERSON, person);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+            Long index = (Long) response.getResult();
+            return index;
+        } else {
+            throw response.getException();
+        }
+
+    }
+
+    // FIND SALONS
+    public List<Salon> findSalons(Salon salon) throws Exception {
+        Request request = new Request(Operation.FIND_SALONS, salon);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if (response.getException() == null) {
+            return (List<Salon>) response.getResult();
+        } else {
+            throw response.getException();
+        }
+    }
+    
+    // ADD SALON
+    public Long saveSalon(Salon salon) throws Exception {
+        Request request = new Request(Operation.SAVE_SALON, salon);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+            Long index = (Long) response.getResult();
+            return index;
+        } else {
+            throw response.getException();
+        }
+    }
+
+    // GET ALL CITIES
+    public List<City> getAllCities() throws Exception {
+        Request request = new Request(Operation.GET_ALL_CITIES, null);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+            List<City> c = (List<City>) response.getResult();
+            return c;
+        } else {
+            throw response.getException();
+        }
+    }
+    
+    // REMOVE SALON
+    public void removeSalon(Salon s) throws Exception {
+        Request request = new Request(Operation.DELETE_SALON, s);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+        } else {
+            throw response.getException();
+        }
+    }
+    
+    // UPDATE SALON
+    public void editSalon(Salon salon) throws Exception {
+
+        Request request = new Request(Operation.EDIT_SALON, salon);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+
+        } else {
+            throw response.getException();
+
+        }
+    }
+    
 }

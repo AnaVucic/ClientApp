@@ -34,12 +34,13 @@ public class PersonsForm extends javax.swing.JFrame {
         txtFilterName = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("(Owners) Dog Grooming Salon Management App");
 
         jLabel4.setText("Search by name");
 
-        btnEditPerson.setText("Edit person");
+        btnEditPerson.setText("View and edit owner");
 
-        btnAddPerson.setText("Add new person");
+        btnAddPerson.setText("Add new owner");
 
         tblPersons.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -57,14 +58,14 @@ public class PersonsForm extends javax.swing.JFrame {
 
         btnSearch.setText("Search");
 
-        btnRemovePerson.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        btnRemovePerson.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         btnRemovePerson.setForeground(new java.awt.Color(204, 0, 0));
-        btnRemovePerson.setText("Remove person");
+        btnRemovePerson.setText("Remove owner");
 
         btnReset.setText("Reset");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Persons Form");
+        jLabel1.setText("Owners Form");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,7 +94,7 @@ public class PersonsForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnRemovePerson, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEditPerson, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAddPerson, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))))
+                            .addComponent(btnAddPerson, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(100, 100, 100))
         );
         layout.setVerticalGroup(
@@ -107,7 +108,7 @@ public class PersonsForm extends javax.swing.JFrame {
                     .addComponent(btnSearch)
                     .addComponent(btnReset)
                     .addComponent(txtFilterName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                .addGap(50, 50, 50)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(btnEditPerson)
@@ -115,7 +116,7 @@ public class PersonsForm extends javax.swing.JFrame {
                 .addComponent(btnAddPerson)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRemovePerson)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();

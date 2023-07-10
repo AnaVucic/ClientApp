@@ -23,13 +23,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Lenovo
- */
 public class EditAppointmentController {
 
     private final EditAppointmentForm form;
+    private final AppointmentsController parentController;
     private Appointment appointment;
     private List<Person> persons;
     private List<Dog> dogs;
@@ -38,6 +35,7 @@ public class EditAppointmentController {
 
     public EditAppointmentController(EditAppointmentForm editAppointmentForm) {
         this.form = editAppointmentForm;
+        parentController = form.getParentController();
         addActionListeners();
     }
 
@@ -47,7 +45,7 @@ public class EditAppointmentController {
                 validateAppointment();
                 generateAppointment();
                 Communication.getInstance().editAppointment(appointment);
-                form.getParentController().fillTableAppointments(null, null, null);
+                parentController.populateTableAppointments(null);
                 JOptionPane.showMessageDialog(form, "System has changed appointment with ID: " + appointment.getAppointmentID() + "!", "Message", JOptionPane.INFORMATION_MESSAGE);
                 form.dispose();
             } catch (ParseException ex) {
@@ -58,7 +56,11 @@ public class EditAppointmentController {
         });
 
         form.cmbPersonPropertyChangeListener((ActionEvent e) -> {
-            fillComboDog();
+            try {
+                populateComboDog();
+            } catch (Exception ex) {
+                Logger.getLogger(EditAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             form.getCmbDog().setSelectedIndex(1);
         });
 
@@ -168,100 +170,73 @@ public class EditAppointmentController {
         form.setVisible(true);
         form.setLocationRelativeTo(null);
         form.setExtendedState(Frame.MAXIMIZED_BOTH);
-        prepareID();
-        prepareForm();
-    }
-
-    private void prepareID() {
-        Long id = form.getId();
-        Appointment a = new Appointment();
-        a.setAppointmentID(id);
         try {
-            appointment = (Appointment) Communication.getInstance().findAppointments(a).get(0);
-            form.getTxtAppointmentId().setText(appointment.getAppointmentID().toString());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(form, "Error while getting the appointment\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            prepareID();
+            populateTableServices();
+            populateComboOwner();
+            populateComboDog();
+            populateComboSalon();
+            fillFieldsDateTime();
+            fillFieldsDurationFee();
+            JOptionPane.showMessageDialog(form, "System has loaded the appointment!","Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(form, "Error while getting the appointment\n" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             form.dispose();
         }
     }
 
-    private void prepareForm() {
-        fillTableServices();
-        perpareComboBoxes();
-        fillFieldsDateTime();
-        fillFieldsDurationFee();
+    private void prepareID() throws Exception {
+        Long id = form.getId();
+        Appointment a = new Appointment();
+        a.setAppointmentID(id);
+        appointment = (Appointment) Communication.getInstance().findAppointments(a).get(0);
+        form.getTxtAppointmentId().setText(appointment.getAppointmentID().toString());
+
     }
 
-    private void fillTableServices() {
-        try {
-            services = Communication.getInstance().getAllServices();
-            ServiceTableModel model = new ServiceTableModel(services, appointment.getServices());
-            form.getTblServices().setModel(model);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(form, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    private void populateTableServices() throws Exception {
+        services = Communication.getInstance().getAllServices();
+        ServiceTableModel model = new ServiceTableModel(services, appointment.getServices());
+        form.getTblServices().setModel(model);
+
+    }
+
+    private void populateComboOwner() throws Exception {
+        form.getCmbPerson().removeAllItems();
+        form.getCmbPerson().setEnabled(false);
+        form.getCmbPerson().addItem(null);
+        persons = Communication.getInstance().getAllPersons();
+        for (Person p : persons) {
+            form.getCmbPerson().addItem(p);
         }
+        form.getCmbPerson().setSelectedItem(appointment.getDog().getPerson());
+        form.getCmbPerson().setEnabled(true);
     }
 
-    private void perpareComboBoxes() {
-        fillComboOwner();
-        fillComboDog();
-        fillComboSalon();
-    }
-
-    private void fillComboOwner() {
-        try {
-            form.getCmbPerson().removeAllItems();
-            form.getCmbPerson().setEnabled(false);
-            form.getCmbPerson().addItem(null);
-            persons = Communication.getInstance().getAllPersons();
-            for (Person p : persons) {
-                form.getCmbPerson().addItem(p);
+    private void populateComboDog() throws Exception {
+        form.getCmbDog().removeAllItems();
+        form.getCmbDog().setEnabled(false);
+        form.getCmbDog().addItem(null);
+        dogs = Communication.getInstance().getAllDogs();
+        for (Dog d : dogs) {
+            if (d.getPerson().equals(form.getCmbPerson().getSelectedItem())) {
+                form.getCmbDog().addItem(d);
             }
-            form.getCmbPerson().setSelectedItem(appointment.getDog().getPerson());
-            form.getCmbPerson().setEnabled(true);
-
-        } catch (Exception ex) {
-            Logger.getLogger(AppointmentsController.class
-                    .getName()).log(Level.SEVERE, null, ex);
         }
+        form.getCmbDog().setSelectedItem(appointment.getDog());
+        form.getCmbDog().setEnabled(true);
     }
 
-    private void fillComboDog() {
-        try {
-            form.getCmbDog().removeAllItems();
-            form.getCmbDog().setEnabled(false);
-            form.getCmbDog().addItem(null);
-            dogs = Communication.getInstance().getAllDogs();
-            for (Dog d : dogs) {
-                if (d.getPerson().equals(form.getCmbPerson().getSelectedItem())) {
-                    form.getCmbDog().addItem(d);
-                }
-            }
-            form.getCmbDog().setSelectedItem(appointment.getDog());
-            form.getCmbDog().setEnabled(true);
-
-        } catch (Exception ex) {
-            Logger.getLogger(AppointmentsController.class
-                    .getName()).log(Level.SEVERE, null, ex);
+    private void populateComboSalon() throws Exception {
+        form.getCmbSalon().removeAllItems();
+        form.getCmbSalon().setEnabled(false);
+        form.getCmbSalon().addItem(null);
+        salons = Communication.getInstance().getAllSalons();
+        for (Salon s : salons) {
+            form.getCmbSalon().addItem(s);
         }
-    }
-
-    private void fillComboSalon() {
-        try {
-            form.getCmbSalon().removeAllItems();
-            form.getCmbSalon().setEnabled(false);
-            form.getCmbSalon().addItem(null);
-            salons = Communication.getInstance().getAllSalons();
-            for (Salon s : salons) {
-                form.getCmbSalon().addItem(s);
-            }
-            form.getCmbSalon().setSelectedItem(appointment.getSalon());
-            form.getCmbSalon().setEnabled(true);
-
-        } catch (Exception ex) {
-            Logger.getLogger(AppointmentsController.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
+        form.getCmbSalon().setSelectedItem(appointment.getSalon());
+        form.getCmbSalon().setEnabled(true);
     }
 
     private void fillFieldsDateTime() {
