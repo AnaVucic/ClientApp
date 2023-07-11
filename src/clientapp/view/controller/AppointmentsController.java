@@ -10,9 +10,7 @@ import clientapp.view.coordinator.MainCoordinator;
 import commonlib.domain.Dog;
 import commonlib.domain.Person;
 import java.awt.event.ActionEvent;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,6 +60,7 @@ public class AppointmentsController {
 
         form.btnViewAllActionListener((ActionEvent e) -> {
             populateTableAppointments(null);
+            form.getTxtDateFilter().setText("");
         });
 
         form.btnEditAppointmentActionListener((ActionEvent e) -> {
@@ -76,22 +75,23 @@ public class AppointmentsController {
 
         form.btnDateDisplayActionListener((ActionEvent e) -> {
             try {
-                String dateString = form.txtSearch().getText();
+                String dateString = form.getTxtDateFilter().getText();
                 DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
 
                 LocalDateTime date = LocalDateTime.parse(dateString + "T00:00:00", formatter);
-               
+
                 Appointment a = new Appointment();
                 a.setDateTime(date);
                 appointments = Communication.getInstance().findAppointments(a);
+                
                 if (appointments.isEmpty()) {
-                populateTableAppointments(null);
-                JOptionPane.showMessageDialog(form, "No appointments found on that date.", "No appointments found!", JOptionPane.INFORMATION_MESSAGE);
-                form.txtSearch().setText("");
-            } else {
-                populateTableAppointments(appointments);
-                JOptionPane.showMessageDialog(form, "System has found appointments with given parameters.", "Appointments found!", JOptionPane.INFORMATION_MESSAGE);
-            }
+                    populateTableAppointments(null);
+                    JOptionPane.showMessageDialog(form, "No appointments found on that date.", "No appointments found!", JOptionPane.INFORMATION_MESSAGE);
+                    form.getTxtDateFilter().setText("");
+                } else {
+                    populateTableAppointments(appointments);
+                    JOptionPane.showMessageDialog(form, "System has found appointments with given parameters.", "Appointments found!", JOptionPane.INFORMATION_MESSAGE);
+                }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(form, "Unable to parse date.\n" + ex.getMessage());
             }

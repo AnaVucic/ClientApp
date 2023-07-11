@@ -61,7 +61,7 @@ public class EditSalonController {
         Long id = form.getId();
         Salon s = new Salon();
         s.setSalonID(id);
-        salon = (Salon) Communication.getInstance().findSalons(s).get(0);
+        salon = (Salon) Communication.getInstance().findSalon(s);
         form.getTxtSalonId().setText(salon.getSalonID().toString());
     }
 

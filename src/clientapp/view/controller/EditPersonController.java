@@ -4,6 +4,7 @@ import clientapp.communication.Communication;
 import clientapp.view.form.EditPersonForm;
 import commonlib.domain.Person;
 import java.awt.event.ActionEvent;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class EditPersonController {
@@ -52,7 +53,7 @@ public class EditPersonController {
         Long id = form.getId();
         Person p = new Person();
         p.setPersonID(id);
-        person = (Person) Communication.getInstance().findPersons(p).get(0);
+        person = (Person) Communication.getInstance().findPerson(p);
         form.getTxtPersonId().setText(person.getPersonID().toString());
     }
 
@@ -66,14 +67,15 @@ public class EditPersonController {
     private void validatePerson() throws Exception {
         String error = "";
 
-        if (form.getTxtFisrname().getText().isEmpty()) {
-            error += "Firstname must be filled!\n";
+        if (form.getTxtFisrname().getText().isEmpty() || form.getTxtFisrname().getText().length() < 2) {
+            error += "Firstname must be at least 2 characters long!\n";
         }
-        if (form.getTxtLastname().getText().isEmpty()) {
-            error += "Lastname must be filled!\n";
+        if (form.getTxtLastname().getText().isEmpty() || form.getTxtLastname().getText().length() < 2) {
+            error += "Lastname must be at least 2 characters long!\n";
         }
-        if (form.getTxtContactNumber().getText().isEmpty()) {
-            error += "Contact number must be filled!\n";
+        if (form.getTxtContactNumber().getText().isEmpty() | form.getTxtContactNumber().getText().length() < 11 
+                || !Pattern.matches("\\d{3} \\d{3} \\d{3}", form.getTxtContactNumber().getText())) {
+            error += "Contact number must be in fomrat 000 000 000!\n";
         }
 
         if (!error.isEmpty()) {

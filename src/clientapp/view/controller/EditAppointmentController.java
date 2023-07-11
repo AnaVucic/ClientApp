@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,16 +73,15 @@ public class EditAppointmentController {
                 as.setService((Long) form.getTblServices().getValueAt(row, 0));
                 try {
                     Communication.getInstance().saveAppointmentService(as);
-
+                    Service newService = ((ServiceTableModel) form.getTblServices().getModel()).getService(row);
+                    appointment.getServices().add(newService);
+                    form.getTxtTotalDuration().setText(String.valueOf(Integer.parseInt(form.getTxtTotalDuration().getText()) + newService.getDuration()));
+                    form.getTxtTotalFee().setText(String.valueOf(newService.getFee().add(new BigDecimal(form.getTxtTotalFee().getText()))));
+                    form.getTblServices().setValueAt(Boolean.TRUE, row, 4);
+                    ((ServiceTableModel) form.getTblServices().getModel()).fireTableCellUpdated(row, 4);
                 } catch (Exception ex) {
                     Logger.getLogger(EditAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Service newService = ((ServiceTableModel) form.getTblServices().getModel()).getService(row);
-                appointment.getServices().add(newService);
-                form.getTxtTotalDuration().setText(String.valueOf(Integer.parseInt(form.getTxtTotalDuration().getText()) + newService.getDuration()));
-                form.getTxtTotalFee().setText(String.valueOf(newService.getFee().add(new BigDecimal(form.getTxtTotalFee().getText()))));
-                form.getTblServices().setValueAt(Boolean.TRUE, row, 4);
-                ((ServiceTableModel) form.getTblServices().getModel()).fireTableCellUpdated(row, 4);
             }
         });
 
@@ -98,15 +96,15 @@ public class EditAppointmentController {
                 as.setService((Long) form.getTblServices().getValueAt(row, 0));
                 try {
                     Communication.getInstance().removeAppointmentService(as);
+                    Service oldService = ((ServiceTableModel) form.getTblServices().getModel()).getService(row);
+                    appointment.getServices().remove(oldService);
+                    form.getTxtTotalDuration().setText(String.valueOf(Integer.parseInt(form.getTxtTotalDuration().getText()) - oldService.getDuration()));
+                    form.getTxtTotalFee().setText(String.valueOf(new BigDecimal(form.getTxtTotalFee().getText()).subtract(oldService.getFee())));
+                    form.getTblServices().setValueAt(Boolean.FALSE, row, 4);
+                    ((ServiceTableModel) form.getTblServices().getModel()).fireTableCellUpdated(row, 4);
                 } catch (Exception ex) {
                     Logger.getLogger(EditAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Service oldService = ((ServiceTableModel) form.getTblServices().getModel()).getService(row);
-                appointment.getServices().remove(oldService);
-                form.getTxtTotalDuration().setText(String.valueOf(Integer.parseInt(form.getTxtTotalDuration().getText()) - oldService.getDuration()));
-                form.getTxtTotalFee().setText(String.valueOf(new BigDecimal(form.getTxtTotalFee().getText()).subtract(oldService.getFee())));
-                form.getTblServices().setValueAt(Boolean.FALSE, row, 4);
-                ((ServiceTableModel) form.getTblServices().getModel()).fireTableCellUpdated(row, 4);
             }
         });
 
@@ -151,9 +149,8 @@ public class EditAppointmentController {
         appointment.setDog((Dog) form.getCmbDog().getSelectedItem());
         appointment.setSalon((Salon) form.getCmbSalon().getSelectedItem());
 
-        List<Service> newServices = new ArrayList<Service>();
-
-        appointment.setServices(newServices);
+//        List<Service> newServices = new ArrayList<Service>();
+        //appointment.setServices(newServices);
         int duration = 0;
         BigDecimal fee = new BigDecimal(0);
         for (Service s : appointment.getServices()) {
@@ -189,7 +186,7 @@ public class EditAppointmentController {
         Long id = form.getId();
         Appointment a = new Appointment();
         a.setAppointmentID(id);
-        appointment = (Appointment) Communication.getInstance().findAppointments(a).get(0);
+        appointment = (Appointment) Communication.getInstance().findAppointment(a);
         form.getTxtAppointmentId().setText(appointment.getAppointmentID().toString());
 
     }

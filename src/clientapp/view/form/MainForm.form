@@ -95,18 +95,6 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu6">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Price Rates Information"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="mniPrices">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Prices"/>
-              </Properties>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu7">
           <Properties>
             <Property name="text" type="java.lang.String" value=" About"/>
@@ -116,6 +104,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Software"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mniSoftwareActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -191,7 +182,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Currently loggen in as:"/>
+        <Property name="text" type="java.lang.String" value="Currently logged in as:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCurrentUser">

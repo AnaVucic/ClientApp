@@ -34,7 +34,7 @@ public class LoginController {
                 try {
                     resetForm();
                     String username = loginForm.getTxtUsername().getText().trim();
-                    String password = loginForm.getTxtPassword().getText().trim();
+                    String password = String.copyValueOf(loginForm.getTxtPassword().getPassword());
                     validateForm(username, password);
                     User user = Communication.getInstance().login(username, password);
                     JOptionPane.showMessageDialog(loginForm, "User " + user.getUsername()
@@ -44,7 +44,7 @@ public class LoginController {
                     MainCoordinator.getInstance().addParam(Constant.LOGGED_IN_USER, user);
                     MainCoordinator.getInstance().openMainForm();
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(loginForm, "Unable to login\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(loginForm, "Unable to login\n", "Error", JOptionPane.ERROR_MESSAGE);
                     Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package clientapp.view.form.component.table;
 
 import commonlib.domain.Service;
@@ -9,10 +5,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-/**
- *
- * @author ANA
- */
 public class ServiceTableModel extends AbstractTableModel {
 
     private final String[] columnNames = {"ID", "Name", "Fee", "Duration", "Included"};

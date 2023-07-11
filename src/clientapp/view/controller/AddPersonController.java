@@ -4,6 +4,7 @@ import clientapp.communication.Communication;
 import clientapp.view.form.AddPersonForm;
 import commonlib.domain.Person;
 import java.awt.event.ActionEvent;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class AddPersonController {
@@ -28,34 +29,38 @@ public class AddPersonController {
 
         form.btnSaveActionListener((ActionEvent e) -> {
             person = new Person();
-            if (validatePerson()) {
-                try {
-                    generatePerson();
-                    person.setPersonID(Long.MIN_VALUE);
-                    generatedID = Communication.getInstance().savePerson(person);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(form, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
+            try {
+                validatePerson();
+                generatePerson();
+                person.setPersonID(Long.MIN_VALUE);
+                generatedID = Communication.getInstance().savePerson(person);
                 person.setPersonID(generatedID);
                 JOptionPane.showMessageDialog(form, "Saved an owner with ID: " + person.getPersonID(), "Success", JOptionPane.INFORMATION_MESSAGE);
                 parentController.populateTablePersons(null);
                 form.dispose();
-            } else {
-                person = null;
-                JOptionPane.showMessageDialog(form, "System was unable to save owner with given parameters", "Failure", JOptionPane.WARNING_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(form, "System was unable to save an owner with given parameters\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-            System.out.println(person);
         });
     }
 
-    private boolean validatePerson() {
-        if(form.getTxtFirstname().getText().isBlank() || form.getTxtFirstname().getText().length() < 2)
-            return false;
-        if(form.getTxtLastname().getText().isBlank() || form.getTxtLastname().getText().length() < 2)
-            return false;
-        if(form.getTxtContact().getText().isBlank() || form.getTxtContact().getText().length() < 11)
-            return false;
-        return true;
+    private void validatePerson() throws Exception {
+        String error = "";
+
+        if (form.getTxtFirstname().getText().isEmpty() || form.getTxtFirstname().getText().length() < 2) {
+            error += "Firstname must be at least 2 characters long!\n";
+        }
+        if (form.getTxtLastname().getText().isEmpty() || form.getTxtLastname().getText().length() < 2) {
+            error += "Lastname must be at least 2 characters long!\n";
+        }
+        if (form.getTxtContact().getText().isEmpty() | form.getTxtContact().getText().length() < 11 
+                || !Pattern.matches("\\d{3} \\d{3} \\d{3}", form.getTxtContact().getText())) {
+            error += "Contact number must be in fomrat 000 000 000!\n";
+        }
+
+        if (!error.isEmpty()) {
+            throw new Exception(error);
+        }
     }
 
     private void generatePerson() {

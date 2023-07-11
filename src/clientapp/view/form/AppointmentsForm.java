@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -34,7 +35,7 @@ public class AppointmentsForm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtDateFrom = new javax.swing.JTextField();
+        txtDateFilter = new javax.swing.JTextField();
         btnDateDisplay = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -131,7 +132,7 @@ public class AppointmentsForm extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, Short.MAX_VALUE)
-                                .addComponent(txtDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtDateFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -142,7 +143,7 @@ public class AppointmentsForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDateFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnDateDisplay)
                 .addContainerGap(52, Short.MAX_VALUE))
@@ -162,9 +163,9 @@ public class AppointmentsForm extends javax.swing.JFrame {
                             .addComponent(btnEditAppointment))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 934, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(btnViewAll, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnAddAppointment, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,52 +208,16 @@ public class AppointmentsForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblAppointments;
-    private javax.swing.JTextField txtDateFrom;
+    private javax.swing.JTextField txtDateFilter;
     // End of variables declaration//GEN-END:variables
 
-    public JComboBox<Salon> getCmbSalon() {
-        return cmbSalon;
-    }
-
-    public void setCmbSalon(JComboBox<Salon> cmbSalon) {
-        this.cmbSalon = cmbSalon;
-    }
-
-    public JTable getTblAppointments() {
-        return tblAppointments;
-    }
-
-    public void setTblAppointments(JTable tblAppointments) {
-        this.tblAppointments = tblAppointments;
-    }
-
-    public JTextField txtSearch() {
-        return txtDateFrom;
-    }
-
-    public void setTxtDateFrom(JTextField txtDateFrom) {
-        this.txtDateFrom = txtDateFrom;
-    }
-
-    
-    public JButton getBtnEditAppointment() {
-        return btnEditAppointment;
-    }
-
-    public void setBtnEditAppointment(JButton btnEditAppointment) {
-        this.btnEditAppointment = btnEditAppointment;
-    }
-
-    public JButton getBtnDeleteAppointment() {
-        return btnDeleteAppointment;
-    }
-
-    public void setBtnDeleteAppointment(JButton btnDeleteAppointment) {
-        this.btnDeleteAppointment = btnDeleteAppointment;
-    }
     
     
 
+    
+    
+    
+    
     // ACTION LISTENERS
     public void btnViewAllActionListener(ActionListener actionListener) {
         btnViewAll.addActionListener(actionListener);
@@ -277,4 +242,78 @@ public class AppointmentsForm extends javax.swing.JFrame {
     public void btnDeleteAppointmentActionListener(ActionListener actionListener) {
         btnDeleteAppointment.addActionListener(actionListener);
     }
+
+    public JButton getBtnAddAppointment() {
+        return btnAddAppointment;
+    }
+
+    public void setBtnAddAppointment(JButton btnAddAppointment) {
+        this.btnAddAppointment = btnAddAppointment;
+    }
+
+    public JButton getBtnDateDisplay() {
+        return btnDateDisplay;
+    }
+
+    public void setBtnDateDisplay(JButton btnDateDisplay) {
+        this.btnDateDisplay = btnDateDisplay;
+    }
+
+    public JButton getBtnDeleteAppointment() {
+        return btnDeleteAppointment;
+    }
+
+    public void setBtnDeleteAppointment(JButton btnDeleteAppointment) {
+        this.btnDeleteAppointment = btnDeleteAppointment;
+    }
+
+    public JButton getBtnEditAppointment() {
+        return btnEditAppointment;
+    }
+
+    public void setBtnEditAppointment(JButton btnEditAppointment) {
+        this.btnEditAppointment = btnEditAppointment;
+    }
+
+    public JButton getBtnViewAll() {
+        return btnViewAll;
+    }
+
+    public void setBtnViewAll(JButton btnViewAll) {
+        this.btnViewAll = btnViewAll;
+    }
+
+    public JComboBox<Salon> getCmbSalon() {
+        return cmbSalon;
+    }
+
+    public void setCmbSalon(JComboBox<Salon> cmbSalon) {
+        this.cmbSalon = cmbSalon;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public void setjScrollPane1(JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public JTable getTblAppointments() {
+        return tblAppointments;
+    }
+
+    public void setTblAppointments(JTable tblAppointments) {
+        this.tblAppointments = tblAppointments;
+    }
+
+    public JTextField getTxtDateFilter() {
+        return txtDateFilter;
+    }
+
+    public void setTxtDateFilter(JTextField txtDateFilter) {
+        this.txtDateFilter = txtDateFilter;
+    }
+    
+    
 }

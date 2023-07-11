@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class MainForm extends javax.swing.JFrame{
     
@@ -36,8 +37,6 @@ public class MainForm extends javax.swing.JFrame{
         mniDogs = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         mniSalons = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        mniPrices = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         mniSoftware = new javax.swing.JMenuItem();
 
@@ -53,7 +52,7 @@ public class MainForm extends javax.swing.JFrame{
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Dog Grooming Salon Management");
 
-        jLabel2.setText("Currently loggen in as:");
+        jLabel2.setText("Currently logged in as:");
 
         lblCurrentUser.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         lblCurrentUser.setText("Current User");
@@ -88,16 +87,14 @@ public class MainForm extends javax.swing.JFrame{
 
         jMenuBar1.add(jMenu5);
 
-        jMenu6.setText("Price Rates Information");
-
-        mniPrices.setText("Prices");
-        jMenu6.add(mniPrices);
-
-        jMenuBar1.add(jMenu6);
-
         jMenu7.setText(" About");
 
         mniSoftware.setText("Software");
+        mniSoftware.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniSoftwareActionPerformed(evt);
+            }
+        });
         jMenu7.add(mniSoftware);
 
         jMenuBar1.add(jMenu7);
@@ -138,6 +135,10 @@ public class MainForm extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void mniSoftwareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniSoftwareActionPerformed
+        JOptionPane.showMessageDialog(this, "By Ana");
+    }//GEN-LAST:event_mniSoftwareActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogOut;
@@ -148,7 +149,6 @@ public class MainForm extends javax.swing.JFrame{
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -161,7 +161,6 @@ public class MainForm extends javax.swing.JFrame{
     private javax.swing.JMenuItem mniAppointments;
     private javax.swing.JMenuItem mniDogs;
     private javax.swing.JMenuItem mniPersons;
-    private javax.swing.JMenuItem mniPrices;
     private javax.swing.JMenuItem mniSalons;
     private javax.swing.JMenuItem mniSoftware;
     // End of variables declaration//GEN-END:variables
@@ -199,10 +198,6 @@ public class MainForm extends javax.swing.JFrame{
     
     public void mniSalonsActionListener (ActionListener actionListener){
         mniSalons.addActionListener(actionListener);
-    }
-    
-    public void mniPricesActionListener (ActionListener actionListener){
-        mniPrices.addActionListener(actionListener);
     }
     
     public void mniSoftwareActionListener (ActionListener actionListener) {

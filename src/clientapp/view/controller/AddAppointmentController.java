@@ -100,7 +100,7 @@ public class AddAppointmentController {
                     }
                 } catch (IllegalArgumentException | DateTimeParseException ex) {
                     valid = false;
-                    JOptionPane.showMessageDialog(form, ex.getMessage());
+                    JOptionPane.showMessageDialog(form, "Date or time is not in valid format!");
                     appointment = null;
                 }
                 return valid;

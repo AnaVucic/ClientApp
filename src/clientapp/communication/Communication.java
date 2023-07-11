@@ -406,4 +406,60 @@ public class Communication {
         }
     }
     
+    // FIND ONE APPOINTMENT 
+    public Appointment findAppointment(Appointment a) throws Exception {
+        Request request = new Request(Operation.FIND_APPOINTMENT, a);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+            return (Appointment) response.getResult();
+        } else {
+            throw response.getException();
+
+        }
+    } 
+    
+    // FIND ONE DOG
+    public Dog findDog(Dog d) throws Exception {
+        Request request = new Request(Operation.FIND_DOG, d);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+            return (Dog) response.getResult();
+        } else {
+            throw response.getException();
+
+        }
+    } 
+    
+    // FIND ONE SALON
+    public Salon findSalon(Salon s) throws Exception {
+        Request request = new Request(Operation.FIND_SALON, s);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+            return (Salon) response.getResult();
+        } else {
+            throw response.getException();
+
+        }
+    } 
+    
+    // FIND ONE PERSON
+    public Person findPerson(Person p) throws Exception {
+        Request request = new Request(Operation.FIND_PERSON, p);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+
+        if (response.getException() == null) {
+            return (Person) response.getResult();
+        } else {
+            throw response.getException();
+
+        }
+    }
+    
 }

@@ -83,7 +83,7 @@ public class EditDogController {
         Long id = form.getId();
         Dog d = new Dog();
         d.setDogID(id);
-        dog = (Dog) Communication.getInstance().findDogs(d).get(0);
+        dog = (Dog) Communication.getInstance().findDog(d);
         form.getTxtDogId().setText(dog.getDogID().toString());
     }
 
