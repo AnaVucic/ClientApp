@@ -243,6 +243,10 @@ public class AppointmentsForm extends javax.swing.JFrame {
         btnDeleteAppointment.addActionListener(actionListener);
     }
 
+    
+    
+    
+    
     public JButton getBtnAddAppointment() {
         return btnAddAppointment;
     }
